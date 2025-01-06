@@ -5,8 +5,10 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 import 'onboarding_model.dart';
 export 'onboarding_model.dart';
 
@@ -29,6 +31,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => OnboardingModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (FFAppState().isShownOnboard) {
+        context.pushNamed('SignIn');
+      } else {
+        return;
+      }
+    });
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
@@ -226,6 +237,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -233,7 +246,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).alternate,
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -249,7 +261,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 600.0,
+                      height: 500.0,
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -630,6 +642,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             32.0, 16.0, 32.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            FFAppState().isShownOnboard = true;
+
                             context.pushNamed(
                               'SignIn',
                               extra: <String, dynamic>{

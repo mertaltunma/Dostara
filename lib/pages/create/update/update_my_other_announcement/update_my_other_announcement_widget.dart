@@ -8,7 +8,12 @@ import 'update_my_other_announcement_model.dart';
 export 'update_my_other_announcement_model.dart';
 
 class UpdateMyOtherAnnouncementWidget extends StatefulWidget {
-  const UpdateMyOtherAnnouncementWidget({super.key});
+  const UpdateMyOtherAnnouncementWidget({
+    super.key,
+    required this.relatedListing,
+  });
+
+  final OtherAnnouncementsRow? relatedListing;
 
   @override
   State<UpdateMyOtherAnnouncementWidget> createState() =>
@@ -86,18 +91,21 @@ class _UpdateMyOtherAnnouncementWidgetState
             padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: FutureBuilder<List<OtherAnnouncementsRow>>(
               future: OtherAnnouncementsTable().querySingleRow(
-                queryFn: (q) => q,
+                queryFn: (q) => q.eqOrNull(
+                  'id',
+                  widget.relatedListing?.id,
+                ),
               ),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 77.0,
-                      height: 77.0,
-                      child: SpinKitPulse(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        size: 77.0,
+                      width: 43.0,
+                      height: 43.0,
+                      child: SpinKitRipple(
+                        color: FlutterFlowTheme.of(context).customColor3,
+                        size: 43.0,
                       ),
                     ),
                   );
@@ -175,77 +183,80 @@ class _UpdateMyOtherAnnouncementWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: SizedBox(
-                              width: 200.0,
-                              child: TextFormField(
-                                controller: _model.textController1 ??=
-                                    TextEditingController(
-                                  text: columnOtherAnnouncementsRow?.title,
-                                ),
-                                focusNode: _model.textFieldFocusNode1,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelText: 'İlan Başlığı',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Mukta',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintText: 'TextField',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Mukta',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0xFFE0E0E0),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.textController1 ??=
+                                  TextEditingController(
+                                text: columnOtherAnnouncementsRow?.title,
+                              ),
+                              focusNode: _model.textFieldFocusNode1,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                labelText: 'İlan Başlığı',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
                                     .override(
                                       fontFamily: 'Mukta',
                                       letterSpacing: 0.0,
                                     ),
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textController1Validator
-                                    .asValidator(context),
+                                hintText: 'TextField',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Mukta',
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E0E0),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Mukta',
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                              maxLength: 30,
+                              buildCounter: (context,
+                                      {required currentLength,
+                                      required isFocused,
+                                      maxLength}) =>
+                                  null,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              validator: _model.textController1Validator
+                                  .asValidator(context),
                             ),
                           ),
                         ),
@@ -257,11 +268,10 @@ class _UpdateMyOtherAnnouncementWidgetState
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
+                            child: Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
                               child: SizedBox(
-                                width: 200.0,
+                                width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.textController2 ??=
                                       TextEditingController(
@@ -324,10 +334,11 @@ class _UpdateMyOtherAnnouncementWidgetState
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Mukta',
+                                        fontSize: 16.0,
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: 5,
-                                  maxLength: 300,
+                                  maxLength: 500,
                                   buildCounter: (context,
                                           {required currentLength,
                                           required isFocused,
@@ -348,83 +359,80 @@ class _UpdateMyOtherAnnouncementWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: SizedBox(
-                              width: 200.0,
-                              child: TextFormField(
-                                controller: _model.textController3 ??=
-                                    TextEditingController(
-                                  text: columnOtherAnnouncementsRow?.ownerName,
-                                ),
-                                focusNode: _model.textFieldFocusNode3,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelText: 'İlan Sahibinin İsmi',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Mukta',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintText: 'TextField',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Mukta',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0xFFE0E0E0),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.textController3 ??=
+                                  TextEditingController(
+                                text: columnOtherAnnouncementsRow?.ownerName,
+                              ),
+                              focusNode: _model.textFieldFocusNode3,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                labelText: 'İlan Sahibinin İsmi',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
                                     .override(
                                       fontFamily: 'Mukta',
                                       letterSpacing: 0.0,
                                     ),
-                                maxLength: 11,
-                                buildCounter: (context,
-                                        {required currentLength,
-                                        required isFocused,
-                                        maxLength}) =>
-                                    null,
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textController3Validator
-                                    .asValidator(context),
+                                hintText: 'TextField',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Mukta',
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E0E0),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Mukta',
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                              maxLength: 30,
+                              buildCounter: (context,
+                                      {required currentLength,
+                                      required isFocused,
+                                      maxLength}) =>
+                                  null,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              validator: _model.textController3Validator
+                                  .asValidator(context),
                             ),
                           ),
                         ),
@@ -434,77 +442,81 @@ class _UpdateMyOtherAnnouncementWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: SizedBox(
-                              width: 200.0,
-                              child: TextFormField(
-                                controller: _model.textController4 ??=
-                                    TextEditingController(
-                                  text: columnOtherAnnouncementsRow?.ownerPhone,
-                                ),
-                                focusNode: _model.textFieldFocusNode4,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelText: 'İlan Sahibinin Telefonu',
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Mukta',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintText: 'TextField',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Mukta',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0xFFE0E0E0),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.textController4 ??=
+                                  TextEditingController(
+                                text: columnOtherAnnouncementsRow?.ownerPhone,
+                              ),
+                              focusNode: _model.textFieldFocusNode4,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                labelText: 'İlan Sahibinin Telefonu',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
                                     .override(
                                       fontFamily: 'Mukta',
                                       letterSpacing: 0.0,
                                     ),
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textController4Validator
-                                    .asValidator(context),
+                                hintText: 'TextField',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Mukta',
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E0E0),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Mukta',
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                              maxLength: 11,
+                              buildCounter: (context,
+                                      {required currentLength,
+                                      required isFocused,
+                                      maxLength}) =>
+                                  null,
+                              keyboardType: TextInputType.phone,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              validator: _model.textController4Validator
+                                  .asValidator(context),
                             ),
                           ),
                         ),
@@ -534,9 +546,9 @@ class _UpdateMyOtherAnnouncementWidgetState
                           text: 'Değişiklikleri Kaydet',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 50.0,
+                            height: 56.0,
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
+                                0.0, 0.0, 16.0, 0.0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).alternate,
@@ -554,7 +566,7 @@ class _UpdateMyOtherAnnouncementWidgetState
                         ),
                       ),
                     ),
-                  ].divide(const SizedBox(height: 16.0)),
+                  ].divide(const SizedBox(height: 24.0)),
                 );
               },
             ),

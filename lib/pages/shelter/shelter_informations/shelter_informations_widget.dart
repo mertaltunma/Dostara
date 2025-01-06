@@ -106,11 +106,11 @@ class _ShelterInformationsWidgetState extends State<ShelterInformationsWidget> {
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 77.0,
-                      height: 77.0,
-                      child: SpinKitPulse(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        size: 77.0,
+                      width: 43.0,
+                      height: 43.0,
+                      child: SpinKitRipple(
+                        color: FlutterFlowTheme.of(context).customColor3,
+                        size: 43.0,
                       ),
                     ),
                   );
@@ -697,9 +697,6 @@ class _ShelterInformationsWidgetState extends State<ShelterInformationsWidget> {
                                       ),
                                     ),
                                   ].divide(const SizedBox(width: 8.0)),
-                                ),
-                                Container(
-                                  decoration: const BoxDecoration(),
                                 ),
                                 Container(
                                   decoration: const BoxDecoration(),

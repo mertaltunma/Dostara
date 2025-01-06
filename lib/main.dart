@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       });
     jwtTokenStream.listen((_) {});
     Future.delayed(
-      const Duration(milliseconds: 3000),
+      const Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
@@ -78,6 +78,17 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
         brightness: Brightness.light,
+        scrollbarTheme: ScrollbarThemeData(
+          thumbColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.dragged)) {
+              return const Color(0xff010d26);
+            }
+            if (states.contains(WidgetState.hovered)) {
+              return const Color(0xff010d26);
+            }
+            return const Color(0xff010d26);
+          }),
+        ),
         useMaterial3: false,
       ),
       themeMode: _themeMode,

@@ -1,27 +1,30 @@
 import '/backend/supabase/supabase.dart';
+import '/components/nav_bar/nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
-import 'shelter_profile_widget.dart' show ShelterProfileWidget;
+import 'yapay_zeka_widget.dart' show YapayZekaWidget;
 import 'package:flutter/material.dart';
 
-class ShelterProfileModel extends FlutterFlowModel<ShelterProfileWidget> {
+class YapayZekaModel extends FlutterFlowModel<YapayZekaWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for RatingBar widget.
-  double? ratingBarValue1;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
-  Completer<List<CommentsRow>>? requestCompleter;
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl = '';
+
+  Completer<List<BreedsRow>>? requestCompleter;
+  // Model for NavBar component.
+  late NavBarModel navBarModel;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    navBarModel = createModel(context, () => NavBarModel());
+  }
 
   @override
   void dispose() {
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
+    navBarModel.dispose();
   }
 
   /// Additional helper methods.

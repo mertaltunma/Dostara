@@ -42,4 +42,11 @@ class FavoriteAnimalsRow extends SupabaseDataRow {
 
   String? get userId => getField<String>('user_id');
   set userId(String? value) => setField<String>('user_id', value);
+
+  bool? get isClickedFavorite => getField<bool>('isClickedFavorite');
+  set isClickedFavorite(bool? value) =>
+      setField<bool>('isClickedFavorite', value);
+
+  String? get shelterId => getField<String>('shelterId');
+  set shelterId(String? value) => setField<String>('shelterId', value);
 }

@@ -2,12 +2,14 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/my_listings/my_listings_widget.dart';
 import '/components/nav_bar/nav_bar_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'my_other_postings_model.dart';
 export 'my_other_postings_model.dart';
@@ -19,15 +21,40 @@ class MyOtherPostingsWidget extends StatefulWidget {
   State<MyOtherPostingsWidget> createState() => _MyOtherPostingsWidgetState();
 }
 
-class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
+class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget>
+    with TickerProviderStateMixin {
   late MyOtherPostingsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => MyOtherPostingsModel());
+
+    animationsMap.addAll({
+      'listViewOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 100.0.ms,
+            duration: 700.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(100.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -107,10 +134,12 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                           future: (_model.requestCompleter ??= Completer<
                                   List<OtherAnnouncementsRow>>()
                                 ..complete(OtherAnnouncementsTable().queryRows(
-                                  queryFn: (q) => q.eqOrNull(
-                                    'user_id',
-                                    currentUserUid,
-                                  ),
+                                  queryFn: (q) => q
+                                      .eqOrNull(
+                                        'user_id',
+                                        currentUserUid,
+                                      )
+                                      .order('created_at'),
                                 )))
                               .future,
                           builder: (context, snapshot) {
@@ -118,12 +147,12 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                             if (!snapshot.hasData) {
                               return Center(
                                 child: SizedBox(
-                                  width: 77.0,
-                                  height: 77.0,
-                                  child: SpinKitPulse(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 77.0,
+                                  width: 43.0,
+                                  height: 43.0,
+                                  child: SpinKitRipple(
+                                    color: FlutterFlowTheme.of(context)
+                                        .customColor3,
+                                    size: 43.0,
                                   ),
                                 ),
                               );
@@ -198,17 +227,22 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                                                       valueOrDefault<String>(
                                                         listViewOtherAnnouncementsRow
                                                             .announcementType,
-                                                        'Yardım Çağrısı / Sahiplendirme',
+                                                        'İlan Tipi',
                                                       ),
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .titleMedium
                                                           .override(
                                                             fontFamily: 'Mukta',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            fontSize: 15.0,
+                                                            color: listViewOtherAnnouncementsRow
+                                                                        .announcementType ==
+                                                                    'Sahiplendirme'
+                                                                ? const Color(
+                                                                    0xFFC99303)
+                                                                : FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                            fontSize: 20.0,
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
@@ -219,7 +253,7 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                                                           "d/M H:mm",
                                                           listViewOtherAnnouncementsRow
                                                               .createdAt),
-                                                      'Oluşturulma Zamanı',
+                                                      'Tarih',
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -254,11 +288,8 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                                                         BorderRadius.circular(
                                                             8.0),
                                                     child: Image.network(
-                                                      valueOrDefault<String>(
-                                                        listViewOtherAnnouncementsRow
-                                                            .animalPhoto,
-                                                        'https://images.unsplash.com/photo-1489084917528-a57e68a79a1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw0fHxDYXR8ZW58MHx8fHwxNzMxNTIyMDcwfDA&ixlib=rb-4.0.3&q=80&w=1080',
-                                                      ),
+                                                      listViewOtherAnnouncementsRow
+                                                          .animalPhoto!,
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
@@ -276,26 +307,33 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                                                           listViewOtherAnnouncementsRow
                                                               .title,
                                                           'Başlık',
+                                                        ).maybeHandleOverflow(
+                                                          maxChars: 25,
+                                                          replacement: '…',
                                                         ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Mukta',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
+                                                        maxLines: 1,
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyLarge
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Mukta',
+                                                              fontSize: 20.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
                                                       ),
                                                       Text(
                                                         valueOrDefault<String>(
                                                           listViewOtherAnnouncementsRow
                                                               .explanation,
                                                           'Açıklama',
+                                                        ).maybeHandleOverflow(
+                                                          maxChars: 100,
+                                                          replacement: '…',
                                                         ),
                                                         textAlign:
                                                             TextAlign.start,
@@ -463,7 +501,30 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         context.pushNamed(
-                                                            'UpdateMyOtherAnnouncement');
+                                                          'UpdateMyOtherAnnouncement',
+                                                          queryParameters: {
+                                                            'relatedListing':
+                                                                serializeParam(
+                                                              listViewOtherAnnouncementsRow,
+                                                              ParamType
+                                                                  .SupabaseRow,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            kTransitionInfoKey:
+                                                                const TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .fade,
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      0),
+                                                            ),
+                                                          },
+                                                        );
                                                       },
                                                       text: 'Düzenle',
                                                       options: FFButtonOptions(
@@ -515,10 +576,11 @@ class _MyOtherPostingsWidgetState extends State<MyOtherPostingsWidget> {
                                   ),
                                 );
                               },
-                            );
+                            ).animateOnPageLoad(
+                                animationsMap['listViewOnPageLoadAnimation']!);
                           },
                         ),
-                      ].divide(const SizedBox(height: 24.0)),
+                      ].divide(const SizedBox(height: 12.0)),
                     ),
                   ),
                 ),

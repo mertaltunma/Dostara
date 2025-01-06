@@ -216,12 +216,22 @@ dynamic deserializeParam<T>(
       case ParamType.SupabaseRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
+          case VetLocationsRow:
+            return VetLocationsRow(data);
           case LostAnimalsPostingsRow:
             return LostAnimalsPostingsRow(data);
           case FavoriteAnimalsRow:
             return FavoriteAnimalsRow(data);
+          case AdoptedAnimalsRow:
+            return AdoptedAnimalsRow(data);
           case OtherAnnouncementsRow:
             return OtherAnnouncementsRow(data);
+          case AnimalsBreedTextRow:
+            return AnimalsBreedTextRow(data);
+          case BreedsRow:
+            return BreedsRow(data);
+          case ShelterLocationsRow:
+            return ShelterLocationsRow(data);
           case AnimalsRow:
             return AnimalsRow(data);
           case SheltersRow:
@@ -232,6 +242,8 @@ dynamic deserializeParam<T>(
             return CommentsRow(data);
           case UsersRow:
             return UsersRow(data);
+          case ImagesOfAnimalsRow:
+            return ImagesOfAnimalsRow(data);
           default:
             return null;
         }

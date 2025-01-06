@@ -128,17 +128,6 @@ class _SignInWidgetState extends State<SignInWidget>
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4.0,
-                              color: Color(0x34000000),
-                              offset: Offset(
-                                0.0,
-                                2.0,
-                              ),
-                              spreadRadius: 3.0,
-                            )
-                          ],
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: Align(

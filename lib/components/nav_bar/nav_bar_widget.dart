@@ -101,7 +101,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         FontAwesomeIcons.home,
                         color: widget.pageNumber == 1
                             ? FlutterFlowTheme.of(context).alternate
-                            : FlutterFlowTheme.of(context).secondaryText,
+                            : const Color(0xFF6B7278),
                         size: 24.0,
                       ),
                       Padding(
@@ -119,31 +119,51 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ],
                   ),
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.robot,
-                      color: widget.pageNumber == 2
-                          ? FlutterFlowTheme.of(context).alternate
-                          : FlutterFlowTheme.of(context).secondaryText,
-                      size: 24.0,
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                      child: Text(
-                        'Yapay Zeka',
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Mukta',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed(
+                      'YapayZeka',
+                      extra: <String, dynamic>{
+                        kTransitionInfoKey: const TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.robot,
+                        color: widget.pageNumber == 2
+                            ? FlutterFlowTheme.of(context).alternate
+                            : const Color(0xFF6B7278),
+                        size: 24.0,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                        child: Text(
+                          'Yapay Zeka',
+                          style: FlutterFlowTheme.of(context)
+                              .bodySmall
+                              .override(
+                                fontFamily: 'Mukta',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                letterSpacing: 0.0,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ].divide(const SizedBox(width: 24.0)),
             ),
@@ -215,7 +235,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         FontAwesomeIcons.paw,
                         color: widget.pageNumber == 3
                             ? FlutterFlowTheme.of(context).alternate
-                            : FlutterFlowTheme.of(context).secondaryText,
+                            : const Color(0xFF6B7278),
                         size: 24.0,
                       ),
                       Padding(
@@ -262,7 +282,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         FontAwesomeIcons.solidUserCircle,
                         color: widget.pageNumber == 4
                             ? FlutterFlowTheme.of(context).alternate
-                            : FlutterFlowTheme.of(context).secondaryText,
+                            : const Color(0xFF6B7278),
                         size: 24.0,
                       ),
                       Padding(

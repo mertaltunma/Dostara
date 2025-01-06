@@ -1,11 +1,12 @@
 import '/backend/supabase/supabase.dart';
 import '/components/listings/listings_widget.dart';
 import '/components/nav_bar/nav_bar_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'listings_created_model.dart';
 export 'listings_created_model.dart';
@@ -17,18 +18,40 @@ class ListingsCreatedWidget extends StatefulWidget {
   State<ListingsCreatedWidget> createState() => _ListingsCreatedWidgetState();
 }
 
-class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
+class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget>
+    with TickerProviderStateMixin {
   late ListingsCreatedModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ListingsCreatedModel());
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
+    animationsMap.addAll({
+      'listViewOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 100.0.ms,
+            duration: 700.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(100.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -48,13 +71,6 @@ class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          automaticallyImplyLeading: false,
-          actions: const [],
-          centerTitle: false,
-          elevation: 0.0,
-        ),
         body: SafeArea(
           top: true,
           child: Stack(
@@ -65,92 +81,13 @@ class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      wrapWithModel(
-                        model: _model.listingsModel,
-                        updateCallback: () => safeSetState(() {}),
-                        child: const ListingsWidget(),
-                      ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            12.0, 12.0, 12.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x1A000000),
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.search,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: _model.textController,
-                                          focusNode: _model.textFieldFocusNode,
-                                          autofocus: false,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            hintText: 'İlan ara...',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Mukta',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            errorBorder: InputBorder.none,
-                                            focusedErrorBorder:
-                                                InputBorder.none,
-                                            contentPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 16.0),
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Mukta',
-                                                letterSpacing: 0.0,
-                                              ),
-                                          minLines: 1,
-                                          validator: _model
-                                              .textControllerValidator
-                                              .asValidator(context),
-                                        ),
-                                      ),
-                                    ].divide(const SizedBox(width: 12.0)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 25.0,
-                              buttonSize: 50.0,
-                              fillColor: FlutterFlowTheme.of(context).alternate,
-                              icon: Icon(
-                                Icons.filter_list,
-                                color: FlutterFlowTheme.of(context).info,
-                                size: 24.0,
-                              ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                          ].divide(const SizedBox(width: 16.0)),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        child: wrapWithModel(
+                          model: _model.listingsModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: const ListingsWidget(),
                         ),
                       ),
                       Align(
@@ -181,18 +118,19 @@ class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
                       ),
                       FutureBuilder<List<OtherAnnouncementsRow>>(
                         future: OtherAnnouncementsTable().queryRows(
-                          queryFn: (q) => q,
+                          queryFn: (q) => q.order('created_at'),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
                             return Center(
                               child: SizedBox(
-                                width: 77.0,
-                                height: 77.0,
-                                child: SpinKitPulse(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  size: 77.0,
+                                width: 43.0,
+                                height: 43.0,
+                                child: SpinKitRipple(
+                                  color:
+                                      FlutterFlowTheme.of(context).customColor3,
+                                  size: 43.0,
                                 ),
                               ),
                             );
@@ -258,18 +196,20 @@ class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
                                                 valueOrDefault<String>(
                                                   listViewOtherAnnouncementsRow
                                                       .announcementType,
-                                                  'Yardım Çağrısı / Sahiplendirme',
+                                                  'Sahiplendirme',
                                                 ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily: 'Mukta',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .titleMedium
+                                                    .override(
+                                                      fontFamily: 'Mukta',
+                                                      color: listViewOtherAnnouncementsRow
+                                                                  .announcementType ==
+                                                              'Yardım Çağrısı'
+                                                          ? const Color(0xFFBA1414)
+                                                          : const Color(0xFFF5DB02),
+                                                      letterSpacing: 0.0,
+                                                    ),
                                               ),
                                               Text(
                                                 valueOrDefault<String>(
@@ -347,6 +287,9 @@ class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
                                                         listViewOtherAnnouncementsRow
                                                             .explanation,
                                                         'Açıklama',
+                                                      ).maybeHandleOverflow(
+                                                        maxChars: 134,
+                                                        replacement: '…',
                                                       ),
                                                       textAlign:
                                                           TextAlign.start,
@@ -434,7 +377,8 @@ class _ListingsCreatedWidgetState extends State<ListingsCreatedWidget> {
                                 ),
                               );
                             },
-                          );
+                          ).animateOnPageLoad(
+                              animationsMap['listViewOnPageLoadAnimation']!);
                         },
                       ),
                       Container(

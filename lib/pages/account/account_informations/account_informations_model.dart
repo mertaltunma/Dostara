@@ -26,21 +26,21 @@ class AccountInformationsModel
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
-  late bool passwordVisibility1;
   String? Function(BuildContext, String?)? textController3Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode4;
   TextEditingController? textController4;
-  late bool passwordVisibility2;
+  late bool passwordVisibility1;
   String? Function(BuildContext, String?)? textController4Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode5;
   TextEditingController? textController5;
-  late bool passwordVisibility3;
+  late bool passwordVisibility2;
   String? Function(BuildContext, String?)? textController5Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode6;
   TextEditingController? textController6;
+  late bool passwordVisibility3;
   String? Function(BuildContext, String?)? textController6Validator;
 
   @override

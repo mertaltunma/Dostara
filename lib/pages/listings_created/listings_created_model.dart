@@ -9,10 +9,6 @@ class ListingsCreatedModel extends FlutterFlowModel<ListingsCreatedWidget> {
 
   // Model for Listings component.
   late ListingsModel listingsModel;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
   // Model for NavBar component.
   late NavBarModel navBarModel;
 
@@ -25,9 +21,6 @@ class ListingsCreatedModel extends FlutterFlowModel<ListingsCreatedWidget> {
   @override
   void dispose() {
     listingsModel.dispose();
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
-
     navBarModel.dispose();
   }
 }

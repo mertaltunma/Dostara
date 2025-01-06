@@ -41,9 +41,6 @@ class AnimalsRow extends SupabaseDataRow {
   String? get weight => getField<String>('weight');
   set weight(String? value) => setField<String>('weight', value);
 
-  String? get breedText => getField<String>('breed_text');
-  set breedText(String? value) => setField<String>('breed_text', value);
-
   String? get dateShelter => getField<String>('date_shelter');
   set dateShelter(String? value) => setField<String>('date_shelter', value);
 

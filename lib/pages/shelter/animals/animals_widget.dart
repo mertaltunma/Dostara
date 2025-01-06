@@ -1,8 +1,10 @@
 import '/backend/supabase/supabase.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'animals_model.dart';
 export 'animals_model.dart';
@@ -19,18 +21,40 @@ class AnimalsWidget extends StatefulWidget {
   State<AnimalsWidget> createState() => _AnimalsWidgetState();
 }
 
-class _AnimalsWidgetState extends State<AnimalsWidget> {
+class _AnimalsWidgetState extends State<AnimalsWidget>
+    with TickerProviderStateMixin {
   late AnimalsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => AnimalsModel());
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
+    animationsMap.addAll({
+      'listViewOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 100.0.ms,
+            duration: 700.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(100.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -92,159 +116,68 @@ class _AnimalsWidgetState extends State<AnimalsWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            12.0, 12.0, 12.0, 12.0),
-                        child: Text(
-                          'Barınağın Sakinleri',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Mukta',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 30.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              color: const Color(0x1A000000),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.search,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
-                                  ),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _model.textController,
-                                      focusNode: _model.textFieldFocusNode,
-                                      autofocus: false,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        hintText: 'Hayvan ara...',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Mukta',
-                                              letterSpacing: 0.0,
-                                            ),
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        focusedErrorBorder: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 16.0),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Mukta',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      minLines: 1,
-                                      validator: _model.textControllerValidator
-                                          .asValidator(context),
-                                    ),
-                                  ),
-                                ].divide(const SizedBox(width: 12.0)),
-                              ),
-                            ),
-                          ),
-                        ),
-                        FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 25.0,
-                          buttonSize: 50.0,
-                          fillColor: FlutterFlowTheme.of(context).alternate,
-                          icon: Icon(
-                            Icons.filter_list,
-                            color: FlutterFlowTheme.of(context).info,
-                            size: 24.0,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
-                        ),
-                      ].divide(const SizedBox(width: 16.0)),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                    child: RichText(
-                      textScaler: MediaQuery.of(context).textScaler,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Hayvanlar',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Mukta',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 20.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          )
-                        ],
+                    alignment: const AlignmentDirectional(0.0, -1.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
+                      child: Text(
+                        'Barınağın Sakinleri',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Mukta',
-                              color: Colors.black,
-                              fontSize: 15.0,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 30.0,
                               letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),
                       ),
                     ),
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(0.0, -1.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 12.0),
+                      child: Text(
+                        'Alt tarafta barınakta bulunan dostlarımızı görebilirsiniz.',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Mukta',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1.0,
+                    indent: 16.0,
+                    endIndent: 16.0,
+                    color: FlutterFlowTheme.of(context).primary,
                   ),
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 16.0),
                     child: FutureBuilder<List<AnimalsRow>>(
                       future: AnimalsTable().queryRows(
-                        queryFn: (q) => q.eqOrNull(
-                          'user_id',
-                          widget.userId,
-                        ),
+                        queryFn: (q) => q
+                            .eqOrNull(
+                              'user_id',
+                              widget.userId,
+                            )
+                            .order('created_at'),
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 77.0,
-                              height: 77.0,
-                              child: SpinKitPulse(
-                                color: FlutterFlowTheme.of(context).alternate,
-                                size: 77.0,
+                              width: 43.0,
+                              height: 43.0,
+                              child: SpinKitRipple(
+                                color:
+                                    FlutterFlowTheme.of(context).customColor3,
+                                size: 43.0,
                               ),
                             ),
                           );
@@ -275,7 +208,18 @@ class _AnimalsWidgetState extends State<AnimalsWidget> {
                                       listViewAnimalsRow,
                                       ParamType.SupabaseRow,
                                     ),
+                                    'shelterId': serializeParam(
+                                      widget.userId,
+                                      ParamType.String,
+                                    ),
                                   }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: const TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                    ),
+                                  },
                                 );
                               },
                               child: Material(
@@ -469,14 +413,15 @@ class _AnimalsWidgetState extends State<AnimalsWidget> {
                                             ),
                                           ],
                                         ),
-                                      ].divide(const SizedBox(height: 4.0)),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
                             );
                           },
-                        );
+                        ).animateOnPageLoad(
+                            animationsMap['listViewOnPageLoadAnimation']!);
                       },
                     ),
                   ),

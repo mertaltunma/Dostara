@@ -9,7 +9,7 @@ export '/pages/login/sign_in/sign_in_widget.dart' show SignInWidget;
 export '/pages/login/sign_up/sign_up_widget.dart' show SignUpWidget;
 export '/pages/login/forgot_password/forgot_password_widget.dart'
     show ForgotPasswordWidget;
-export '/pages/login/onboarding/onboarding_widget.dart' show OnboardingWidget;
+export '/pages/onboarding/onboarding_widget.dart' show OnboardingWidget;
 export '/pages/shelter/adopt/adopt_widget.dart' show AdoptWidget;
 export '/pages/shelter/adopted/adopted_widget.dart' show AdoptedWidget;
 export '/pages/home_page_lost/home_page_lost_widget.dart'
@@ -51,3 +51,6 @@ export '/pages/create/update/update_my_lost_posting/update_my_lost_posting_widge
     show UpdateMyLostPostingWidget;
 export '/pages/create/update/update_my_other_announcement/update_my_other_announcement_widget.dart'
     show UpdateMyOtherAnnouncementWidget;
+export '/pages/google_map_shelters/google_map_shelters_widget.dart'
+    show GoogleMapSheltersWidget;
+export '/pages/yapay_zeka/yapay_zeka_widget.dart' show YapayZekaWidget;

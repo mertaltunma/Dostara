@@ -44,4 +44,15 @@ class SheltersRow extends SupabaseDataRow {
 
   String? get website => getField<String>('website');
   set website(String? value) => setField<String>('website', value);
+
+  int get shelterId => getField<int>('shelter_id')!;
+  set shelterId(int value) => setField<int>('shelter_id', value);
+
+  int? get howManyAdopted => getField<int>('howManyAdopted');
+  set howManyAdopted(int? value) => setField<int>('howManyAdopted', value);
+
+  String? get howManyAnimalInShelter =>
+      getField<String>('howManyAnimalInShelter');
+  set howManyAnimalInShelter(String? value) =>
+      setField<String>('howManyAnimalInShelter', value);
 }

@@ -131,7 +131,7 @@ class _ExitAccountWidgetState extends State<ExitAccountWidget> {
                         await authManager.signOut();
                         GoRouter.of(context).clearRedirectLocation();
 
-                        context.goNamedAuth('SignIn', context.mounted);
+                        context.goNamedAuth('Onboarding', context.mounted);
                       },
                       text: 'Eminim',
                       options: FFButtonOptions(

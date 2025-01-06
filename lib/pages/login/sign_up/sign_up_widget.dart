@@ -114,17 +114,6 @@ class _SignUpWidgetState extends State<SignUpWidget>
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4.0,
-                              color: Color(0x34000000),
-                              offset: Offset(
-                                0.0,
-                                2.0,
-                              ),
-                              spreadRadius: 3.0,
-                            )
-                          ],
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: Align(
@@ -668,48 +657,82 @@ class _SignUpWidgetState extends State<SignUpWidget>
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
-                                    onPressed: () async {
-                                      GoRouter.of(context).prepareAuthEvent();
-                                      if (_model.passwordTextController.text !=
-                                          _model.password2TextController.text) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                              'Passwords don\'t match!',
-                                            ),
-                                          ),
-                                        );
-                                        return;
-                                      }
+                                    onPressed: _model.checkboxValue!
+                                        ? null
+                                        : () async {
+                                            if (_model.checkboxValue == true) {
+                                              GoRouter.of(context)
+                                                  .prepareAuthEvent();
+                                              if (_model.passwordTextController
+                                                      .text !=
+                                                  _model.password2TextController
+                                                      .text) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                      'Passwords don\'t match!',
+                                                    ),
+                                                  ),
+                                                );
+                                                return;
+                                              }
 
-                                      final user = await authManager
-                                          .createAccountWithEmail(
-                                        context,
-                                        _model.emailAddressTextController.text,
-                                        _model.passwordTextController.text,
-                                      );
-                                      if (user == null) {
-                                        return;
-                                      }
+                                              final user = await authManager
+                                                  .createAccountWithEmail(
+                                                context,
+                                                _model
+                                                    .emailAddressTextController
+                                                    .text,
+                                                _model.passwordTextController
+                                                    .text,
+                                              );
+                                              if (user == null) {
+                                                return;
+                                              }
 
-                                      await UsersTable().insert({
-                                        'user_id': currentUserUid,
-                                        'created_at': supaSerialize<DateTime>(
-                                            getCurrentTimestamp),
-                                        'user_email': _model
-                                            .emailAddressTextController.text,
-                                        'user_password':
-                                            _model.passwordTextController.text,
-                                        'user_name':
-                                            _model.nameTextController.text,
-                                        'user_phone':
-                                            _model.phoneTextController.text,
-                                      });
+                                              await UsersTable().insert({
+                                                'user_id': currentUserUid,
+                                                'created_at':
+                                                    supaSerialize<DateTime>(
+                                                        getCurrentTimestamp),
+                                                'user_email': _model
+                                                    .emailAddressTextController
+                                                    .text,
+                                                'user_password': _model
+                                                    .passwordTextController
+                                                    .text,
+                                                'user_name': _model
+                                                    .nameTextController.text,
+                                                'user_phone': _model
+                                                    .phoneTextController.text,
+                                              });
 
-                                      context.pushNamedAuth(
-                                          'SignIn', context.mounted);
-                                    },
+                                              context.pushNamedAuth(
+                                                  'SignIn', context.mounted);
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Uygulama politikalarını kabul etmelisiniz.',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: const Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                            }
+                                          },
                                     text: 'Hesap Oluştur',
                                     options: FFButtonOptions(
                                       width: double.infinity,

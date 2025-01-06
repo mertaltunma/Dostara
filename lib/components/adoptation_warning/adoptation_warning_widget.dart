@@ -40,6 +40,8 @@ class _AdoptationWarningWidgetState extends State<AdoptationWarningWidget> {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
+        width: double.infinity,
+        height: 200.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
           borderRadius: BorderRadius.circular(12.0),
@@ -58,11 +60,6 @@ class _AdoptationWarningWidgetState extends State<AdoptationWarningWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.info_outline,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    size: 24.0,
-                  ),
                   Text(
                     'Sahiplendirme Bilgisi',
                     style: FlutterFlowTheme.of(context).headlineSmall.override(

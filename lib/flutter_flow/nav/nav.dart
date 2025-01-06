@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
@@ -79,13 +80,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const MidpageWidget() : const SignInWidget(),
+          appStateNotifier.loggedIn ? const MidpageWidget() : const OnboardingWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const MidpageWidget() : const SignInWidget(),
+              appStateNotifier.loggedIn ? const MidpageWidget() : const OnboardingWidget(),
         ),
         FFRoute(
           name: 'Shelters',
@@ -120,6 +121,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'correspondingAnimal',
               ParamType.SupabaseRow,
             ),
+            shelterId: params.getParam(
+              'shelterId',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -145,12 +150,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Adopt',
           path: '/adopt',
-          builder: (context, params) => const AdoptWidget(),
+          builder: (context, params) => AdoptWidget(
+            adoptationInformations: params.getParam<AdoptedAnimalsRow>(
+              'adoptationInformations',
+              ParamType.SupabaseRow,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Adopted',
           path: '/adopted',
-          builder: (context, params) => const AdoptedWidget(),
+          builder: (context, params) => AdoptedWidget(
+            shelterInformation: params.getParam(
+              'shelterInformation',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'HomePageLost',
@@ -287,12 +302,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'UpdateMyLostPosting',
           path: '/updateMyLostPosting',
-          builder: (context, params) => const UpdateMyLostPostingWidget(),
+          builder: (context, params) => UpdateMyLostPostingWidget(
+            relatedAnimal: params.getParam<LostAnimalsPostingsRow>(
+              'relatedAnimal',
+              ParamType.SupabaseRow,
+            ),
+          ),
         ),
         FFRoute(
           name: 'UpdateMyOtherAnnouncement',
           path: '/updateMyOtherAnnouncement',
-          builder: (context, params) => const UpdateMyOtherAnnouncementWidget(),
+          builder: (context, params) => UpdateMyOtherAnnouncementWidget(
+            relatedListing: params.getParam<OtherAnnouncementsRow>(
+              'relatedListing',
+              ParamType.SupabaseRow,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'GoogleMapShelters',
+          path: '/googleMapShelters',
+          builder: (context, params) => const GoogleMapSheltersWidget(),
+        ),
+        FFRoute(
+          name: 'YapayZeka',
+          path: '/yapayZeka',
+          builder: (context, params) => const YapayZekaWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -463,7 +498,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/signIn';
+            return '/onboarding';
           }
           return null;
         },
@@ -477,14 +512,13 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Container(
-                  color: FlutterFlowTheme.of(context).customColor1,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/Dostara.png',
-                      width: 500.0,
-                      height: 500.0,
-                      fit: BoxFit.cover,
+              ? Center(
+                  child: SizedBox(
+                    width: 43.0,
+                    height: 43.0,
+                    child: SpinKitRipple(
+                      color: FlutterFlowTheme.of(context).customColor3,
+                      size: 43.0,
                     ),
                   ),
                 )

@@ -1,4 +1,5 @@
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'add_animal_widget.dart' show AddAnimalWidget;
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,12 @@ class AddAnimalModel extends FlutterFlowModel<AddAnimalWidget> {
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
   String? Function(BuildContext, String?)? textController1Validator;
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
@@ -42,18 +49,6 @@ class AddAnimalModel extends FlutterFlowModel<AddAnimalWidget> {
   FocusNode? textFieldFocusNode8;
   TextEditingController? textController8;
   String? Function(BuildContext, String?)? textController8Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode9;
-  TextEditingController? textController9;
-  String? Function(BuildContext, String?)? textController9Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode10;
-  TextEditingController? textController10;
-  String? Function(BuildContext, String?)? textController10Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode11;
-  TextEditingController? textController11;
-  String? Function(BuildContext, String?)? textController11Validator;
 
   @override
   void initState(BuildContext context) {}
@@ -83,14 +78,5 @@ class AddAnimalModel extends FlutterFlowModel<AddAnimalWidget> {
 
     textFieldFocusNode8?.dispose();
     textController8?.dispose();
-
-    textFieldFocusNode9?.dispose();
-    textController9?.dispose();
-
-    textFieldFocusNode10?.dispose();
-    textController10?.dispose();
-
-    textFieldFocusNode11?.dispose();
-    textController11?.dispose();
   }
 }

@@ -29,6 +29,9 @@ class FFAppState extends ChangeNotifier {
         }
       }
     });
+    _safeInit(() {
+      _isShownOnboard = prefs.getBool('ff_isShownOnboard') ?? _isShownOnboard;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -48,6 +51,13 @@ class FFAppState extends ChangeNotifier {
   void updateAccountInfoStruct(Function(AccountInfoStruct) updateFn) {
     updateFn(_accountInfo);
     prefs.setString('ff_accountInfo', _accountInfo.serialize());
+  }
+
+  bool _isShownOnboard = false;
+  bool get isShownOnboard => _isShownOnboard;
+  set isShownOnboard(bool value) {
+    _isShownOnboard = value;
+    prefs.setBool('ff_isShownOnboard', value);
   }
 }
 
